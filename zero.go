@@ -1,6 +1,8 @@
 package types
 
-import "reflect"
+import (
+	"reflect"
+)
 
 // IsZero returns true if v is of its type default value
 func IsZero(v interface{}) bool {
@@ -58,7 +60,7 @@ func nonzero(rv reflect.Value) bool {
 			}
 		}
 		return false
-	case reflect.Interface, reflect.Ptr, reflect.Slice, reflect.Map, reflect.Chan, reflect.Func:
+	case reflect.Interface, reflect.Slice, reflect.Map, reflect.Chan, reflect.Ptr, reflect.Func:
 		return !rv.IsNil()
 	case reflect.UnsafePointer:
 		return rv.Pointer() != 0

@@ -3,6 +3,7 @@ package types
 import (
 	"fmt"
 	"testing"
+	"time"
 	"unsafe"
 
 	"github.com/golib/assert"
@@ -41,6 +42,9 @@ var (
 	chanv  chan interface{}
 	funcv  func(interface{}) interface{}
 	unpv   unsafe.Pointer
+	t      time.Time
+	it     = time.Time{}
+	pt     *time.Time
 
 	zeros = []interface{}{
 		nil,
@@ -67,9 +71,11 @@ var (
 		chanv,
 		funcv,
 		unpv,
+		t, it, pt,
 	}
 	nonzeros = []interface{}{
 		npv, npiv,
+		time.Now(),
 	}
 )
 
