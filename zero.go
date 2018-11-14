@@ -21,10 +21,6 @@ func IsZero(v interface{}) bool {
 		return true
 	}
 
-	if rv.Kind() == reflect.Interface && !rv.IsNil() {
-		rv = rv.Elem()
-	}
-
 	return !nonzero(rv)
 }
 
@@ -60,7 +56,7 @@ func nonzero(rv reflect.Value) bool {
 			}
 		}
 		return false
-	case reflect.Interface, reflect.Slice, reflect.Map, reflect.Chan, reflect.Ptr, reflect.Func:
+	case reflect.Interface, reflect.Ptr, reflect.Slice, reflect.Map, reflect.Chan, reflect.Func:
 		return !rv.IsNil()
 	case reflect.UnsafePointer:
 		return rv.Pointer() != 0
