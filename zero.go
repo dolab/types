@@ -1,6 +1,8 @@
 package types
 
-import "reflect"
+import (
+	"reflect"
+)
 
 // IsZero returns true if v is of its type default value
 func IsZero(v interface{}) bool {
@@ -17,10 +19,6 @@ func IsZero(v interface{}) bool {
 	}
 	if !rv.IsValid() {
 		return true
-	}
-
-	if rv.Kind() == reflect.Interface && !rv.IsNil() {
-		rv = rv.Elem()
 	}
 
 	return !nonzero(rv)
