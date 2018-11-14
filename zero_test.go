@@ -1,12 +1,10 @@
 package types
 
 import (
-	"fmt"
+	"reflect"
 	"testing"
 	"time"
 	"unsafe"
-
-	"github.com/golib/assert"
 )
 
 type (
@@ -126,12 +124,34 @@ var (
 	}
 )
 
-func Test_IsZero(t *testing.T) {
+func Test_IsZeroWithZeros(t *testing.T) {
+	// it should work with zero of types
 	for _, v := range zeros {
-		assert.True(t, IsZero(v), fmt.Sprintf("Expected %#v to be zero.", v))
-	}
+		if !IsZero(v) {
+			t.Errorf("Expected %#v to be zero.", v)
+		}
 
+		if v == nil {
+			continue
+		}
+		if !reflect.DeepEqual(v, reflect.Zero(reflect.TypeOf(v)).Interface()) {
+			t.Errorf("Expected %#v to be zero.", v)
+		}
+	}
+}
+
+func Test_IsZeroWithNonzeros(t *testing.T) {
+	// it should work with nonzero of types
 	for _, v := range nonzeros {
-		assert.False(t, IsZero(v), fmt.Sprintf("Expected %#v not to be zero.", v))
+		if IsZero(v) {
+			t.Errorf("Expected %#v not to be zero.", v)
+		}
+
+		if v == nil {
+			continue
+		}
+		if reflect.DeepEqual(v, reflect.Zero(reflect.TypeOf(v)).Interface()) {
+			t.Errorf("Expected %#v not to be zero.", v)
+		}
 	}
 }
