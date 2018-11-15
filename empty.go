@@ -2,23 +2,10 @@ package types
 
 import (
 	"reflect"
-	"time"
 )
 
 // IsEmpty returns true if v is of its type default value
 func IsEmpty(v interface{}) bool {
-	if IsZero(v) {
-		return true
-	}
-
-	// spec for time.Time
-	switch v.(type) {
-	case time.Time:
-		return v.(time.Time).IsZero()
-	case *time.Time:
-		return v.(*time.Time).IsZero()
-	}
-
 	var rv reflect.Value
 
 	if tv, ok := v.(reflect.Value); ok {
@@ -31,6 +18,10 @@ func IsEmpty(v interface{}) bool {
 }
 
 func nonempty(rv reflect.Value) bool {
+	if IsZero(rv) {
+		return false
+	}
+
 	switch rv.Kind() {
 	case reflect.Struct:
 		for i := 0; i < rv.NumField(); i++ {
@@ -54,6 +45,8 @@ func nonempty(rv reflect.Value) bool {
 		return rv.Len() > 0
 	case reflect.Ptr:
 		return nonempty(rv.Elem())
+	case reflect.Func:
+		return false
 	}
-	return false
+	return true
 }
