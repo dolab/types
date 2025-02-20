@@ -1,6 +1,6 @@
 # types 
 
-[![CircleCI](https://circleci.com/gh/dolab/types/tree/master.svg?style=svg)](https://circleci.com/gh/dolab/types/tree/master)
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/dolab/types/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/dolab/types/tree/master)
 
 The missing concepts of golang types.
 
